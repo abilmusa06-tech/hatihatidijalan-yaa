@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>For Yasmeen</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #020617, #0f172a);
+        color: #e5e7eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .box {
+        text-align: center;
+        max-width: 460px;
+        padding: 25px;
+      }
+      .text {
+        font-size: 18px;
+        line-height: 1.7;
+        min-height: 160px;
+        white-space: pre-line;
+      }
+      input,
+      button {
+        padding: 10px 22px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      input {
+        width: 80%;
+      }
+      button {
+        background: #38bdf8;
+        color: #020617;
+        font-weight: 600;
+        cursor: pointer;
+        display: none;
+      }
+      button:hover {
+        background: #0ea5e9;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- GANTI FILE MUSIK DI SINI -->
+    <audio id="bgMusic" loop>
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="box">
+      <div class="text" id="textArea">
+        ketik <i>mulai</i> untuk membaca sesuatu…
+      </div>
+
+      <input type="text" id="inputMulai" placeholder="ketik mulai" />
+      <br />
+      <button id="btnStart" onclick="startStory()">Mulai</button>
+      <button id="btnNext" onclick="nextStep()">YES</button>
+    </div>
+
+    <script>
+      const steps = [
+        `yasmeenn...
+
+besok yasmeenn pergi ketangse kann.
+kaloo bolee jujurr hehe,
+aku jadi agakk khawatirr walaupun bukan siapa siapa ya cumann...
+
+i just thinking about you,
+more than I should.`,
+
+        `aku tahu yasmeen pergi tidak sendiri.
+kamu bersama seorang cowok,
+berdua-dua.
+
+aku engga marah,
+cumann yaa sedikit cemburu.
+because feelings don’t liee.`,
+
+        `hmm aku ingin yasmeen tahu,
+
+i just care.
+dalam diamm aja,
+ntahh kenapaa aku selalu ingin dapat kabar dari yasmeen sekecil apapun itu aku sangat menghargai
+tapii akuu harapp yasmeen ingatt selalu yaa perkataan aku, terus janji yasmeen sendiri 
+semogaa yasmeen mengingatnyaa yaa karna aku khawatir,kalau bisa kabarin yaa ;) aku
+percayaa dengann yasmeen kalau yasmeen bisa berubah di 2026 inii!!!
+dan i always pray for yasmeenn .`,
+
+        `
+
+Ya Allah,
+jaga yasmeen dalam perjalanannya.
+Lindungi dia disetiap langkah,
+tenangkan hatinya,
+dan sampaikan dia ke tujuan dengan selamat.
+
+take care yasmeen yaa mungkin ini ga seberapa tapi aku buat ini sambil memmikirkan yasmeen sorry alay.
+Semoga yasmeen baik-baik aja yaa.
+aku mendoakann yasmeen,
+with all sincerity.`,
+      ];
+
+      let currentStep = 0;
+      let index = 0;
+
+      function typeText(text, callback) {
+        const area = document.getElementById("textArea");
+        area.textContent = "";
+        index = 0;
+
+        const interval = setInterval(() => {
+          area.textContent += text[index];
+          index++;
+          if (index >= text.length) {
+            clearInterval(interval);
+            if (callback) callback();
+          }
+        }, 40);
+      }
+
+      document
+        .getElementById("inputMulai")
+        .addEventListener("input", function () {
+          if (this.value.toLowerCase() === "mulai") {
+            document.getElementById("btnStart").style.display = "inline-block";
+          }
+        });
+
+      function startStory() {
+        document.getElementById("inputMulai").style.display = "none";
+        document.getElementById("btnStart").style.display = "none";
+
+        // play music
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.4;
+        music.play();
+
+        typeText(steps[0], () => {
+          document.getElementById("btnNext").style.display = "inline-block";
+        });
+      }
+
+      function nextStep() {
+        currentStep++;
+        if (currentStep < steps.length) {
+          document.getElementById("btnNext").style.display = "none";
+          typeText(steps[currentStep], () => {
+            if (currentStep < steps.length - 1) {
+              document.getElementById("btnNext").style.display = "inline-block";
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
